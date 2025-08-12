@@ -1,5 +1,5 @@
 [package]
-name = "res-dedup-hardlink"
+name = "res-dedup"
 version = "0.1.0"
 edition = "2024"
 

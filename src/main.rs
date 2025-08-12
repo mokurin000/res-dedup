@@ -11,7 +11,7 @@ use futures_util::StreamExt;
 use palc::Parser;
 
 use rapidhash::fast::{RandomState, RapidHashMap, RapidHasher};
-use res_dedup_hardlink::{args::Args, scan::visit_dirs};
+use res_dedup::{args::Args, scan::visit_dirs};
 
 fn main() {
     let scan_time = SystemTime::now();
@@ -88,9 +88,8 @@ async fn dedup_files(
 
             if let Some(existing) = hash_file.get(&hash) {
                 println!(
-                    "{} <=> {}",
-                    existing.to_string_lossy(),
-                    file_path.to_string_lossy()
+                    "{{\"source\": {:?}, \"other\": {file_path:?}}}",
+                    existing.as_path(),
                 );
             } else {
                 hash_file.insert(hash, file_path);
