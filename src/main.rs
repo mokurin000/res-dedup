@@ -26,7 +26,7 @@ fn main() {
     for path in directories {
         _ = visit_dirs(path, &mut fileid_path);
     }
-    println!(
+    eprintln!(
         "found {} files in {}msec",
         fileid_path.len(),
         scan_time.elapsed().unwrap_or_default().as_millis()
