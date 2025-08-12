@@ -13,8 +13,6 @@ use palc::Parser;
 use rapidhash::fast::{RandomState, RapidHashMap, RapidHasher};
 use res_dedup_hardlink::{args::Args, scan::visit_dirs};
 
-const SPAWN_THREAD: bool = true;
-
 fn main() {
     let scan_time = SystemTime::now();
     let Args {
@@ -64,7 +62,8 @@ async fn dedup_files(
                     BufResult(Ok(len), buf_) => {
                         let bytes = &buf_[..len];
                         pos += bytes.len() as u64;
-                        if SPAWN_THREAD {
+
+                        if cfg!(feature = "spawn_thread") {
                             let bytes = bytes.to_vec();
                             hasher = spawn_blocking(move || {
                                 hasher.write(&bytes);
