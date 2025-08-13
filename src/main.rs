@@ -2,6 +2,7 @@ use std::hash::Hasher;
 use std::{io, path::PathBuf, time::SystemTime};
 
 use compio::BufResult;
+use compio::buf::bytes::BytesMut;
 use compio::fs::OpenOptions;
 use compio::io::AsyncReadAt;
 use compio::runtime::spawn_blocking;
@@ -52,7 +53,7 @@ async fn dedup_files(
                 return;
             };
 
-            let mut buf = Vec::with_capacity(buf_size);
+            let mut buf = BytesMut::with_capacity(buf_size);
             let mut pos = 0;
             let mut hasher = RapidHasher::default_const();
 
