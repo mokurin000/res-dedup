@@ -1,7 +1,6 @@
 use std::hash::Hasher;
 use std::{io, path::PathBuf, time::SystemTime};
 
-use arrayvec::ArrayVec;
 use compio::BufResult;
 use compio::fs::OpenOptions;
 use compio::io::AsyncReadAt;
@@ -18,6 +17,7 @@ fn main() {
     let Args {
         directories,
         concurrency,
+        buf_size,
     } = Args::parse();
 
     // FileId - File Path
@@ -33,7 +33,7 @@ fn main() {
     );
 
     let files = fileid_path.into_values();
-    if let Err(e) = dedup_files(concurrency, files) {
+    if let Err(e) = dedup_files(concurrency, buf_size, files) {
         eprintln!("read error: {e}");
     }
 }
@@ -41,6 +41,7 @@ fn main() {
 #[compio::main]
 async fn dedup_files(
     concurrency: usize,
+    buf_size: usize,
     files: impl ExactSizeIterator + Iterator<Item = PathBuf>,
 ) -> Result<(), io::Error> {
     let hash_file: DashMap<u64, PathBuf, RandomState> = DashMap::with_hasher(RandomState::new());
@@ -51,7 +52,7 @@ async fn dedup_files(
                 return;
             };
 
-            let mut buf: ArrayVec<u8, { 16 * 1024 }> = ArrayVec::new_const();
+            let mut buf = Vec::with_capacity(buf_size);
             let mut pos = 0;
             let mut hasher = RapidHasher::default_const();
 

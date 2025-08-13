@@ -532,7 +532,6 @@ dependencies = [
 name = "res-dedup"
 version = "0.1.0"
 dependencies = [
- "arrayvec",
  "compio",
  "dashmap",
  "futures-util",

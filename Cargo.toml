@@ -4,7 +4,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-arrayvec = "0.7.6"
 compio = { version = "0.15.0", default-features = false, features = [
     "runtime",
     "macros",
