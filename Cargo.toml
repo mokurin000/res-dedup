@@ -11,6 +11,7 @@ compio = { version = "0.15.0", default-features = false, features = [
 dashmap = "6.1.0"
 futures-util = "0.3.31"
 palc = "0.0.1"
+parse-size = "1.1.0"
 rapidhash = "3.1.0"
 windows = { version = "0.61.3", features = [
     "Win32_Security",

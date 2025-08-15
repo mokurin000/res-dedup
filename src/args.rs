@@ -6,8 +6,8 @@ pub struct Args {
     #[arg(short, long, default_value_t = 64)]
     pub concurrency: usize,
     /// Buffer size
-    #[arg(short = 'B', long, default_value_t = 32*1024)]
-    pub buf_size: usize,
+    #[arg(short = 'B', long, default_value_t = String::from("32 KiB"))]
+    pub buf_size: String,
     /// Paths to scan
     pub directories: Vec<PathBuf>,
 }

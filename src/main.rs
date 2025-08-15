@@ -11,6 +11,7 @@ use palc::Parser;
 
 use rapidhash::fast::{RandomState, RapidHashMap, RapidHasher};
 use res_dedup::{args::Args, scan::visit_dirs};
+use windows::Win32::Storage::FileSystem::FILE_FLAG_SEQUENTIAL_SCAN;
 
 fn main() {
     let scan_time = SystemTime::now();
@@ -19,6 +20,7 @@ fn main() {
         concurrency,
         buf_size,
     } = Args::parse();
+    let buf_size = parse_size::parse_size(buf_size).unwrap_or(32 * 1024) as usize;
 
     // FileId - File Path
     // skip already hard linked files
@@ -48,7 +50,14 @@ async fn dedup_files(
 
     futures_util::stream::iter(files)
         .map(async |file_path| {
-            let Ok(file) = OpenOptions::new().read(true).open(&file_path).await else {
+            let Ok(file) = OpenOptions::new()
+                .read(true)
+                .write(false)
+                .create(false)
+                .custom_flags(FILE_FLAG_SEQUENTIAL_SCAN.0)
+                .open(&file_path)
+                .await
+            else {
                 return;
             };
 
@@ -78,9 +87,9 @@ async fn dedup_files(
 
                         buf = buf_;
                     }
-                    BufResult(Err(e), buf_) => {
-                        buf = buf_;
-                        eprintln!("failed to read: {e}");
+                    BufResult(Err(e), _) => {
+                        eprintln!("failed to read: {e}, pos: {pos}");
+                        return;
                     }
                 }
             }
