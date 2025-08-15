@@ -4,11 +4,17 @@
 
 Fast file-level duplication scanner for Windows, with [FileId] awareness.
 
+> This tool was mainly designed for \(and benchmarked on\) SSD. Parallel sequential read streams are impossible for HDD.
+
 [^0]: https://learn.microsoft.com/en-us/windows/win32/api/WinBase/nf-winbase-createhardlinka#remarks
+
+## TODO
+
+- Linux support (with getdents64)
 
 ## Usage
 
-See `-h` / `--help`
+See `-h` / `--help`.
 
 ## Output format
 
@@ -20,15 +26,13 @@ See `-h` / `--help`
 
 ## Purpose
 
-Reasonbly fast & lightweight file duplication scanner, for windows.
+Reasonbly fast & lightweight file duplication scanner.
 
 By design, hard links are treated as non-duplication.
 
 ## Non-purpose
 
-- Cross platform
-- Blazingly fast
-- Replacement of [jdupes](https://codeberg.org/jbruchon/jdupes)
+Replacement of general & powerful deduplication tools like [jdupes](https://codeberg.org/jbruchon/jdupes)
 
 ## Bahaviour
 

@@ -11,7 +11,6 @@ use palc::Parser;
 
 use rapidhash::fast::{RandomState, RapidHashMap, RapidHasher};
 use res_dedup::{args::Args, scan::visit_dirs};
-use windows::Win32::Storage::FileSystem::FILE_FLAG_SEQUENTIAL_SCAN;
 
 fn main() {
     let scan_time = SystemTime::now();
@@ -54,7 +53,14 @@ async fn dedup_files(
                 .read(true)
                 .write(false)
                 .create(false)
-                .custom_flags(FILE_FLAG_SEQUENTIAL_SCAN.0)
+                .custom_flags(
+                    #[cfg(windows)]
+                    {
+                        windows::Win32::Storage::FileSystem::FILE_FLAG_SEQUENTIAL_SCAN.0
+                    },
+                    #[cfg(not(windows))]
+                    0,
+                )
                 .open(&file_path)
                 .await
             else {

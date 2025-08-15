@@ -1,6 +1,4 @@
-use std::{
-    path::{Path, PathBuf, absolute},
-};
+use std::path::{Path, PathBuf, absolute};
 
 use core::slice;
 use std::{
