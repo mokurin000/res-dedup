@@ -8,6 +8,21 @@ Fast file-level duplication scanner for Windows, with [FileId] awareness.
 
 [^0]: https://learn.microsoft.com/en-us/windows/win32/api/WinBase/nf-winbase-createhardlinka#remarks
 
+## Benchmark
+
+- OS: Windows 11 24H2 / Revision patched
+- CPU: i7-12700H
+- SSD: Acer GM7000
+- Cache Size: 256 KiB
+- Concurrency: 128
+- Benchmark tool: perfmon.exe
+
+| Item      | Average    | Peak       |
+| :-------- | :--------- | :--------- |
+| IO Read   | 3839 MiB/s | 3951 MiB/s |
+| Read op/s | 22162.8    | 25433.4    |
+
+
 ## TODO
 
 - Linux support (with getdents64)
