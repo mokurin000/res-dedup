@@ -19,7 +19,6 @@ fn main() {
         concurrency,
         buf_size,
     } = Args::parse();
-    let buf_size = parse_size::parse_size(buf_size).unwrap_or(32 * 1024) as usize;
 
     // FileId - File Path
     // skip already hard linked files
@@ -34,7 +33,7 @@ fn main() {
     );
 
     let files = fileid_path.into_values();
-    if let Err(e) = dedup_files(concurrency, buf_size, files) {
+    if let Err(e) = dedup_files(concurrency, buf_size.as_usize(), files) {
         eprintln!("read error: {e}");
     }
 }
