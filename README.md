@@ -19,13 +19,14 @@ Fast file-level duplication scanner for Windows, with [FileId] awareness.
 
 [^1]: https://sourceforge.net/projects/crystaldiskmark/files/9.0.1/CrystalDiskMark9_0_1Aoi.exe/download
 
-| Item            | Average    | Peak       | Note                                                |
-| :-------------- | :--------- | :--------- | --------------------------------------------------- |
-| Read op/s       | 22162.8    | 25433.4    |                                                     |
-| res-dedup       | 3839 MiB/s | 3951 MiB/s | 72.9GiB, 56548 files                                |
+| Item            | Average    | Peak       | Note                                                  |
+| :-------------- | :--------- | :--------- | ----------------------------------------------------- |
+| Read op/s       | 22162.8    | 25433.4    |                                                       |
+| res-dedup       | 3839 MiB/s | 3951 MiB/s | 72.9GiB, 56548 files                                  |
+| res-dedup       | 5008 MiB/s | 5256 MiB/s | 55.0GiB, 1563 files                                   |
 | res-dedup       | 1708 MiB/s | 1755 MiB/s | 4GiB, single file<br>16MiB buffer<br>no parallel read |
-| SEQ1M Q8T1 [^1] | 6851 MiB/s | 5844 MiB/s | Single 1GiB file                                    |
-| SEQ1M Q8T1 [^1] | 4432 MiB/s | 2866 MiB/s | Single 4GiB file                                    |
+| SEQ1M Q8T1 [^1] | 6851 MiB/s | --         | Single 1GiB file                                      |
+| SEQ1M Q8T1 [^1] | 4432 MiB/s | --         | Single 4GiB file                                      |
 
 
 ## TODO
